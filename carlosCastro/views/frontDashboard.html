@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Front Dashboard</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+        <script>
+            var citymap = {};
+            citymap['a'] = {
+              center: new google.maps.LatLng(19.3683642, -99.1732938),
+              population: 5714
+            };
+            citymap['b'] = {
+              center: new google.maps.LatLng(19.3883642, -99.1742938),
+              population: 8405
+            };
+            citymap['c'] = {
+              center: new google.maps.LatLng(19.3774642, -99.1752938),
+              population: 6857
+            };
+            citymap['d'] = {
+              center: new google.maps.LatLng(19.37536422, -99.162),
+              population: 4603
+            };
+            citymap['e'] = {
+              center: new google.maps.LatLng(19.36736422, -99.182),
+              population: 5603
+            };
+            citymap['f'] = {
+              center: new google.maps.LatLng(19.3683642, -99.1532938),
+              population: 6714
+            };
+            var cityCircle;
+            function initialize() {
+              // Create the map.
+              var mapOptions = {
+                zoom: 14,
+                center: new google.maps.LatLng(19.3783642,-99.1732938,15),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+              };
+              var map = new google.maps.Map(document.getElementById('map-canvas'),
+                  mapOptions);
+
+              // Construct the circle for each value in citymap.
+              // Note: We scale the area of the circle based on the population.
+              for (var city in citymap) {
+                var populationOptions = {
+                  strokeColor: '#C51162',
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: '#F50057',
+                  fillOpacity: 0.35,
+                  map: map,
+                  center: citymap[city].center,
+                  radius: Math.sqrt(citymap[city].population)
+                };
+                // Add the circle for this city to the map.
+                cityCircle = new google.maps.Circle(populationOptions);
+              }
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+        <script>
+
+     var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-23019901-1']);
+      _gaq.push(['_setDomainName', "bootswatch.com"]);
+        _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+     (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+     })();
+
+    </script>
+    <style>
+        .chart div {
+  font: 10px sans-serif;
+  background-color: #C51162;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Geo-Optimizador</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Imprimir <span class="sr-only">(current)</span></a></li>
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Buscar">
+              </div>
+              <button type="submit" class="btn btn-default">Enter</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="col-md-12" style="background-color:#FAFAFA">
+        <div class='col-md-4' style = "background-color:#E0E0E0">
+        <h1>Panel de control</h1>
+            <hr>
+            <br>
+            <h3>Seleccionar ubicación del mapa</h3>
+            <div class ='col-md-5 col-md-offset'>
+                <label class="control-label" for="inputSmall">Latitud</label>
+                <input class="form-control input-sm" type="text" id="inputSmall">
+            </div>
+            <div class ='col-md-5 col-md-offset-1'>
+                <label class="control-label" for="inputSmall">Longitud</label>
+                <input class="form-control input-sm" type="text" id="inputSmall">
+            <br>
+            </div>
+            <h3>Seleccionar número de cámaras</h3>
+            <select multiple="" class="form-control">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+            </select>
+            <br>
+            <a href="#" class="btn btn-default btn-lg btn-block" style="background-color: #0D47A1;color:#FAFAFA;"><b>Introducir</b></a>
+            <br>
+            <a href="#" class="btn btn-default btn-lg btn-block" style="background-color: #0D47A1;color:#FAFAFA;"><b>Optimizar</b></a>
+            <br>
+        </div>
+            <div class='col-md-7'>
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#mapa" data-toggle="tab">Mapa</a></li>
+                  <li><a href="#db" data-toggle="tab">Base de datos</a></li>
+                  <li><a href="#descriptive" data-toggle="tab">Estadística descriptiva</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                  <div class="tab-pane fade active in" id="mapa">
+                    <br>
+                    <div class='col-md-7 col-md-offset-1' style='background-color: #E0E0E0;width:750px;height:500px;margin-top:150px " ' id='map-canvas'>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="descriptive">
+                    <br>
+                    <div class="chart">
+                      <div style="width: 80px;height: 40px;vertical-align: middle"><b>Cámara 1</b></div>
+                      <div style="width: 150px;height: 40px;vertical-align: middle"><b>Cámara 2</b></div>
+                      <div style="width: 160px;height: 40px;vertical-align: middle"><b>Cámara 3</b></div>
+                      <div style="width: 230px;height: 40px;vertical-align: middle"><b>Cámara 4</b></div>
+                      <div style="width: 420px;height: 40px;vertical-align: middle"><b>Cámara 5</b></div>
+                      <div style="width: 160px;height: 40px;vertical-align: middle"><b>Cámara 6</b></div>
+                      <div style="width: 230px;height: 40px;vertical-align: middle"><b>Cámara 7</b></div>
+                      <div style="width: 150px;height: 40px;vertical-align: middle"><b>Cámara 8</b></div>
+                      <div style="width: 160px;height: 40px;vertical-align: middle"><b>Cámara 9</b></div>
+                      <div style="width: 230px;height: 40px;vertical-align: middle"><b>Cámara 1</b>0</div>
+                      <div style="width: 180px;height: 40px;vertical-align: middle"><b>Cámara 1</b>1</div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="db">
+                  <br>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID cámara</th>
+                                <th>Costo</th>
+                                <th>Cobertura</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>35,500</td>
+                                <td>1.5km²</td>
+                            </tr>
+                            <tr>
+                                <td>002</td>
+                                <td>15,240</td>
+                                <td>.5km²</td>
+                            </tr>
+                            <tr>
+                                <td>003</td>
+                                <td>12,700</td>
+                                <td>1.6km²</td>
+                            </tr>
+                            <tr>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                  <div class="tab-pane fade" id="descriptive">
+                    <p>Etsy .</p>
+                  </div>
+                </div>
+            </div>
+    </div>
+  <script type="text/javascript">
+/* <![CDATA[ */
+(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
+/* ]]> */
+</script>
+</body>
+</html>
